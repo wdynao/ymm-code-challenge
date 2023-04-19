@@ -1,4 +1,5 @@
 const apiKey = 'zVDYtx8y918uT63zaya6tql1hIOyUBz4qZyWugOn'
+const cache: Record<number, [number[], number[]]> = {}
 
 async function getPopulationData(prefectureIds: number[]): Promise<[number[], number[]][] | []> {
   if (prefectureIds.length > 10) {
@@ -7,6 +8,10 @@ async function getPopulationData(prefectureIds: number[]): Promise<[number[], nu
   }
 
   const requests = prefectureIds.map(async (id) => {
+    if (cache[id]) {
+      return cache[id]
+    }
+
     const apiUrl = `https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?prefCode=${id}&cityCode=-`
 
     try {
@@ -26,7 +31,9 @@ async function getPopulationData(prefectureIds: number[]): Promise<[number[], nu
         populations.push(item.value)
       })
 
-      return [years, populations]
+      cache[id] = [years, populations]
+
+      return cache[id]
     } catch (error) {
       console.error(`都道府県ID ${id} の総人口推移データの取得でエラーが発生しました:`, error)
       return null
