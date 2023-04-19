@@ -189,6 +189,7 @@ export default function Home() {
             useResizeHandler
             style={{ width: '100%', height: '100%' }}
           />
+          <p className='note'>※未来の値は予想値</p>
         </div>
       </main>
     </>

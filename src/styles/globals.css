@@ -171,3 +171,12 @@ main {
   backdrop-filter: brightness(0.75) grayscale(0.1) blur(3px);
   flex: auto;
 }
+
+.graph .note {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin: 5px 10px;
+  font-size: small;
+  color: #ffffffa0;
+}
