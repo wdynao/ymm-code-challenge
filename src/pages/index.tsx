@@ -2,7 +2,6 @@ import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
-import styles from '@/styles/Home.module.css'
 import { getPlotlyData } from '@/functions/getPlotlyData'
 import { Data } from 'plotly.js'
 
@@ -12,21 +11,37 @@ export default function Home() {
   const [data, setData] = useState<Data[]>([])
 
   const layout = {
-    title: 'My Plot',
+    title: '',
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: 'rgba(0,0,0,0)',
+    margin: {
+      t: 10, // 上部余白
+      b: 60, // 下部余白
+      l: 80, // 左側余白
+      r: 10, // 右側余白
+    },
     xaxis: {
-      title: 'X Axis Label',
+      title: 'Year',
       showgrid: true,
       zeroline: false,
+      titlefont: {
+        family: 'Arial, sans-serif',
+        size: 18,
+        color: 'lightgrey',
+      },
     },
     yaxis: {
-      title: 'Y Axis Label',
+      title: 'Population',
       showgrid: true,
       zeroline: false,
+      titlefont: {
+        family: 'Arial, sans-serif',
+        size: 18,
+        color: 'lightgrey',
+      },
     },
-    legend: {
-      x: 0,
-      y: 1,
-    },
+    showlegend: true,
+    autosize: true,
   }
 
   useEffect(() => {
@@ -67,15 +82,12 @@ export default function Home() {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <main className={styles.main}>
+      <main>
         <div className='sidebar card'>
           <h1 className='title'>
             <Image src='/icon.png' alt='Logo' className='Logo' width={60} height={60} priority />
             都道府県比較<span>.NEXT</span>
           </h1>
-          <div id='sreach-bar'>
-            <input type='text' placeholder='都道府県を検索' />
-          </div>
           <div className='pref-select' id='pref-select'>
             <p className='region-label-1'>北海道</p>
             <input type='checkbox' id='prefid_1' />
@@ -170,8 +182,14 @@ export default function Home() {
             <label htmlFor='prefid_47'>沖縄県</label>
           </div>
         </div>
-        <div className='Graph'></div>
-        <Plot data={data} layout={layout} />
+        <div className='graph card'>
+          <Plot
+            data={data}
+            layout={layout}
+            useResizeHandler
+            style={{ width: '100%', height: '100%' }}
+          />
+        </div>
       </main>
     </>
   )
