@@ -1,11 +1,64 @@
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import Image from 'next/image'
+import { useState, useEffect } from 'react'
 import styles from '@/styles/Home.module.css'
+import { getPlotlyData } from '@/functions/getPlotlyData'
+import { Data } from 'plotly.js'
 
 const Plot = dynamic(() => import('react-plotly.js'), { ssr: false })
 
 export default function Home() {
+  const [data, setData] = useState<Data[]>([])
+
+  const layout = {
+    title: 'My Plot',
+    xaxis: {
+      title: 'X Axis Label',
+      showgrid: true,
+      zeroline: false,
+    },
+    yaxis: {
+      title: 'Y Axis Label',
+      showgrid: true,
+      zeroline: false,
+    },
+    legend: {
+      x: 0,
+      y: 1,
+    },
+  }
+
+  useEffect(() => {
+    let checkboxes = document.querySelectorAll<HTMLInputElement>(
+      '#pref-select > label > input[type="checkbox"]',
+    )
+
+    const getCheckedList = function (
+      checkboxes: NodeListOf<HTMLInputElement>,
+    ): [number[], string[]] {
+      const checkedIds: number[] = []
+      const checkedNames: string[] = []
+      checkboxes.forEach((checkbox) => {
+        if (checkbox.checked) {
+          const name = checkbox.querySelector('span')
+
+          checkedIds.push(Number(checkbox.id.replace('prefid_', '')))
+          checkedNames.push(String(name?.textContent))
+        }
+      })
+      return [checkedIds, checkedNames]
+    }
+
+    checkboxes.forEach((checkbox) => {
+      checkbox.addEventListener('change', async (event) => {
+        console.log('event')
+        const [checkedIds, checkedNames] = getCheckedList(checkboxes)
+        setData(await getPlotlyData(checkedIds, checkedNames))
+      })
+    })
+  }, [])
+
   return (
     <>
       <Head>
@@ -204,7 +257,8 @@ export default function Home() {
             </label>
           </div>
         </div>
-        <div className='GraphView'></div>
+        <div className='Graph'></div>
+        <Plot data={data} layout={layout} />
       </main>
     </>
   )
