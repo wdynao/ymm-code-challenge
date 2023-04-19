@@ -21,8 +21,9 @@ export default function Home() {
   const legend: MyLegend = {
     traceorder: 'normal',
     x: 0.5,
-    y: -0.2,
+    y: -0.07,
     xanchor: 'center',
+    yanchor: 'top', // legendのy座標の基準を指定
     orientation: 'h',
   }
 
@@ -32,7 +33,7 @@ export default function Home() {
     plot_bgcolor: 'rgba(0,0,0,0)',
     margin: {
       t: 10, // 上部余白
-      b: 60, // 下部余白
+      b: 100, // 下部余白
       l: 80, // 左側余白
       r: 10, // 右側余白
     },
