@@ -1,22 +1,20 @@
 ## アプリの公開先
 
-[実際のアプリを起動する]https://ymm-code-challenge.vercel.app/{.button .hover}
+[`実際のアプリを起動する`](https://ymm-code-challenge.vercel.app/)
 
 ## デザインしたプロトタイプ
 
-[デザインプロトタイプ](https://htmlpreview.github.io/?https://github.com/wdynao/ymm-coding/blob/main/design/prototype.html){.button .hover}
+[`デザインプロトタイプ`](https://htmlpreview.github.io/?https://github.com/wdynao/ymm-coding/blob/main/design/prototype.html)
 
 `design/prototype.html`, `design/prototype.css`
 この 2 つを元に NEXT プロジェクトを構築
 
 ## なぜ Next.js を選んだか
 
-せっかくこういった機会を頂けたので、どうせなら新しい技術に挑戦しようと思った。
 React はよく使っているが、Vue や next はあまり使ったことがなかった。
+せっかくこういった機会を頂けたので、どうせなら新しい技術に挑戦しようと思った。ゆめみ株式会社でプログラムを書くならば、新しい技術フレンドリーになるべきだと感じたため。
 
-ゆめみ株式会社でプログラムを書くならば、新しい技術フレンドリーになるべきだと感じたため。
-
-総合的に Next を選んでよかったし、個人的にもすごくためになった。！！！
+総合的に Next を選んでよかったし、個人的にもすごくためになりました。
 
 ### デザイン時に考慮した点
 
@@ -134,3 +132,10 @@ RESASのAPIから都道府県別の総人口推移データを取得し、グラ
 
 ■getPopulationData.tsのコード
 ```
+
+## 確認している不具合
+
+### ウィンドウを縮小したときだけグラフが縮小されない
+
+調査が足りなかったが、質問サイトで同様の不具合の人がいる。
+react-plotly.js ならではのバグっぽい。
