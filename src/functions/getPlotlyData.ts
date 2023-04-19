@@ -9,10 +9,12 @@ async function getPlotlyData(prefectureIds: number[], prefectureNames: string[])
       const trace: Partial<ScatterData> = {
         x: years,
         y: populations,
-        mode: 'lines',
+        mode: 'lines+markers',
         type: 'scatter',
         name: prefectureNames[index],
-        line: { shape: 'spline' },
+        opacity: 0.9,
+        line: { width: 10, shape: 'spline' },
+        marker: { size: 10 },
       }
       return trace
     })
