@@ -180,3 +180,21 @@ main {
   font-size: small;
   color: #ffffffa0;
 }
+
+.plot .lines .js-line {
+  filter: drop-shadow(0 15px 15px #00000040);
+}
+
+@media (max-width: 767px) {
+  body {
+    padding: 5px;
+  }
+  main {
+    flex-direction: column;
+  }
+  .card {
+    box-shadow: 0px 0px 15px #00000040;
+    margin: 5px;
+    border-radius: 10px;
+  }
+}
