@@ -1,7 +1,10 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## アプリの公開先
+
+[実際のアプリを起動する]https://ymm-code-challenge.vercel.app/{.button .hover}
 
 ## Getting Started
 
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 First, run the development server:
 
 ```bash
