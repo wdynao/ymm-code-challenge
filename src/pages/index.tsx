@@ -3,14 +3,30 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { getPlotlyData } from '@/functions/getPlotlyData'
-import { Data } from 'plotly.js'
+import { Data, Layout } from 'plotly.js'
 
 const Plot = dynamic(() => import('react-plotly.js'), { ssr: false })
+
+type MyLegend = Partial<Layout['legend']> & {
+  orientation?: 'h' | 'v'
+}
+
+type MyLayout = Partial<Layout> & {
+  legend: MyLegend
+}
 
 export default function Home() {
   const [data, setData] = useState<Data[]>([])
 
-  const layout = {
+  const legend: MyLegend = {
+    traceorder: 'normal',
+    x: 0.5,
+    y: -0.2,
+    xanchor: 'center',
+    orientation: 'h',
+  }
+
+  const layout: MyLayout = {
     title: '',
     paper_bgcolor: 'rgba(0,0,0,0)',
     plot_bgcolor: 'rgba(0,0,0,0)',
@@ -40,6 +56,7 @@ export default function Home() {
         color: 'lightgrey',
       },
     },
+    legend: legend,
     showlegend: true,
     autosize: true,
   }
@@ -186,6 +203,7 @@ export default function Home() {
           <Plot
             data={data}
             layout={layout}
+            config={{ responsive: true }}
             useResizeHandler
             style={{ width: '100%', height: '100%' }}
           />
