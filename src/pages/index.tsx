@@ -31,30 +31,27 @@ export default function Home() {
 
   useEffect(() => {
     let checkboxes = document.querySelectorAll<HTMLInputElement>(
-      '#pref-select > label > input[type="checkbox"]',
+      '#pref-select > input[type="checkbox"]',
     )
+    let labels = document.querySelectorAll<HTMLInputElement>('#pref-select > label')
 
-    const getCheckedList = function (
-      checkboxes: NodeListOf<HTMLInputElement>,
-    ): [number[], string[]] {
+    const plotGraph = async function () {
       const checkedIds: number[] = []
       const checkedNames: string[] = []
-      checkboxes.forEach((checkbox) => {
-        if (checkbox.checked) {
-          const name = checkbox.querySelector('span')
 
+      checkboxes.forEach((checkbox, index) => {
+        if (checkbox.checked) {
           checkedIds.push(Number(checkbox.id.replace('prefid_', '')))
-          checkedNames.push(String(name?.textContent))
+          checkedNames.push(String(labels[index].textContent))
         }
       })
-      return [checkedIds, checkedNames]
+
+      setData(await getPlotlyData(checkedIds, checkedNames))
     }
 
     checkboxes.forEach((checkbox) => {
       checkbox.addEventListener('change', async (event) => {
-        console.log('event')
-        const [checkedIds, checkedNames] = getCheckedList(checkboxes)
-        setData(await getPlotlyData(checkedIds, checkedNames))
+        plotGraph()
       })
     })
   }, [])
@@ -81,180 +78,96 @@ export default function Home() {
           </div>
           <div className='pref-select' id='pref-select'>
             <p className='region-label-1'>北海道</p>
-            <label htmlFor='prefid_1'>
-              <input type='checkbox' id='prefid_1' />
-              <span>北海道</span>
-            </label>
+            <input type='checkbox' id='prefid_1' />
+            <label htmlFor='prefid_1'>北海道</label>
             <p className='region-label-2'>東北地方</p>
-            <label htmlFor='prefid_2'>
-              <input type='checkbox' id='prefid_2' />
-              <span>青森県</span>
-            </label>
-            <label htmlFor='prefid_3'>
-              <input type='checkbox' id='prefid_3' />
-              <span>岩手県</span>
-            </label>
-            <label htmlFor='prefid_4'>
-              <input type='checkbox' id='prefid_4' />
-              <span>宮城県</span>
-            </label>
-            <label htmlFor='prefid_5'>
-              <input type='checkbox' id='prefid_5' />
-              <span>秋田県</span>
-            </label>
-            <label htmlFor='prefid_6'>
-              <input type='checkbox' id='prefid_6' />
-              <span>山形県</span>
-            </label>
-            <label htmlFor='prefid_7'>
-              <input type='checkbox' id='prefid_7' />
-              <span>福島県</span>
-            </label>
+            <input type='checkbox' id='prefid_2' />
+            <label htmlFor='prefid_2'>青森県</label>
+            <input type='checkbox' id='prefid_3' />
+            <label htmlFor='prefid_3'>岩手県</label>
+            <input type='checkbox' id='prefid_4' />
+            <label htmlFor='prefid_4'>宮城県</label>
+            <input type='checkbox' id='prefid_5' />
+            <label htmlFor='prefid_5'>秋田県</label>
+            <input type='checkbox' id='prefid_6' />
+            <label htmlFor='prefid_6'>山形県</label>
+            <input type='checkbox' id='prefid_7' />
+            <label htmlFor='prefid_7'>福島県</label>
             <p className='region-label-3'>中部地方</p>
-            <label htmlFor='prefid_15'>
-              <input type='checkbox' id='prefid_15' />
-              <span>新潟県</span>
-            </label>
-            <label htmlFor='prefid_16'>
-              <input type='checkbox' id='prefid_16' />
-              <span>富山県</span>
-            </label>
-            <label htmlFor='prefid_17'>
-              <input type='checkbox' id='prefid_17' />
-              <span>石川県</span>
-            </label>
-            <label htmlFor='prefid_18'>
-              <input type='checkbox' id='prefid_18' />
-              <span>福井県</span>
-            </label>
-            <label htmlFor='prefid_19'>
-              <input type='checkbox' id='prefid_19' />
-              <span>山梨県</span>
-            </label>
-            <label htmlFor='prefid_20'>
-              <input type='checkbox' id='prefid_20' />
-              <span>長野県</span>
-            </label>
-            <label htmlFor='prefid_21'>
-              <input type='checkbox' id='prefid_21' />
-              <span>岐阜県</span>
-            </label>
-            <label htmlFor='prefid_22'>
-              <input type='checkbox' id='prefid_22' />
-              <span>静岡県</span>
-            </label>
-            <label htmlFor='prefid_23'>
-              <input type='checkbox' id='prefid_23' />
-              <span>愛知県</span>
-            </label>
-            <p className='region-label-3'>関東地方</p>
-            <label htmlFor='prefid_8'>
-              <input type='checkbox' id='prefid_8' />
-              <span>茨城県</span>
-            </label>
-            <label htmlFor='prefid_9'>
-              <input type='checkbox' id='prefid_9' />
-              <span>栃木県</span>
-            </label>
-            <label htmlFor='prefid_10'>
-              <input type='checkbox' id='prefid_10' />
-              <span>群馬県</span>
-            </label>
-            <label htmlFor='prefid_11'>
-              <input type='checkbox' id='prefid_11' />
-              <span>埼玉県</span>
-            </label>
-            <label htmlFor='prefid_12'>
-              <input type='checkbox' id='prefid_12' />
-              <span>千葉県</span>
-            </label>
-            <label htmlFor='prefid_13'>
-              <input type='checkbox' id='prefid_13' />
-              <span>東京都</span>
-            </label>
-            <label htmlFor='prefid_14'>
-              <input type='checkbox' id='prefid_14' />
-              <span>神奈川県</span>
-            </label>
-            <p className='region-label-4'>近畿地方</p>
-            <label htmlFor='prefid_24'>
-              <input type='checkbox' id='prefid_24' />
-              <span>三重県</span>
-            </label>
-            <label htmlFor='prefid_25'>
-              <input type='checkbox' id='prefid_25' />
-              <span>滋賀県</span>
-            </label>
-            <label htmlFor='prefid_26'>
-              <input type='checkbox' id='prefid_26' />
-              <span>京都府</span>
-            </label>
-            <label htmlFor='prefid_27'>
-              <input type='checkbox' id='prefid_27' />
-              <span>大阪府</span>
-            </label>
-            <label htmlFor='prefid_28'>
-              <input type='checkbox' id='prefid_28' />
-              <span>兵庫県</span>
-            </label>
-            <label htmlFor='prefid_29'>
-              <input type='checkbox' id='prefid_29' />
-              <span>奈良県</span>
-            </label>
-            <label htmlFor='prefid_30'>
-              <input type='checkbox' id='prefid_30' />
-              <span>和歌山県</span>
-            </label>
+            <input type='checkbox' id='prefid_15' />
+            <label htmlFor='prefid_15'>新潟県</label>
+            <input type='checkbox' id='prefid_16' />
+            <label htmlFor='prefid_16'>富山県</label>
+            <input type='checkbox' id='prefid_17' />
+            <label htmlFor='prefid_17'>石川県</label>
+            <input type='checkbox' id='prefid_18' />
+            <label htmlFor='prefid_18'>福井県</label>
+            <input type='checkbox' id='prefid_19' />
+            <label htmlFor='prefid_19'>山梨県</label>
+            <input type='checkbox' id='prefid_20' />
+            <label htmlFor='prefid_20'>長野県</label>
+            <input type='checkbox' id='prefid_21' />
+            <label htmlFor='prefid_21'>岐阜県</label>
+            <input type='checkbox' id='prefid_22' />
+            <label htmlFor='prefid_22'>静岡県</label>
+            <input type='checkbox' id='prefid_23' />
+            <label htmlFor='prefid_23'>愛知県</label>
+            <p className='region-label-4'>関東地方</p>
+            <input type='checkbox' id='prefid_8' />
+            <label htmlFor='prefid_8'>茨城県</label>
+            <input type='checkbox' id='prefid_9' />
+            <label htmlFor='prefid_9'>栃木県</label>
+            <input type='checkbox' id='prefid_10' />
+            <label htmlFor='prefid_10'>群馬県</label>
+            <input type='checkbox' id='prefid_11' />
+            <label htmlFor='prefid_11'>埼玉県</label>
+            <input type='checkbox' id='prefid_12' />
+            <label htmlFor='prefid_12'>千葉県</label>
+            <input type='checkbox' id='prefid_13' />
+            <label htmlFor='prefid_13'>東京都</label>
+            <input type='checkbox' id='prefid_14' />
+            <label htmlFor='prefid_14'>神奈川県</label>
+            <p className='region-label-5'>近畿地方</p>
+            <input type='checkbox' id='prefid_24' />
+            <label htmlFor='prefid_24'>三重県</label>
+            <input type='checkbox' id='prefid_25' />
+            <label htmlFor='prefid_25'>滋賀県</label>
+            <input type='checkbox' id='prefid_26' />
+            <label htmlFor='prefid_26'>京都府</label>
+            <input type='checkbox' id='prefid_27' />
+            <label htmlFor='prefid_27'>大阪府</label>
+            <input type='checkbox' id='prefid_28' />
+            <label htmlFor='prefid_28'>兵庫県</label>
+            <input type='checkbox' id='prefid_29' />
+            <label htmlFor='prefid_29'>奈良県</label>
+            <input type='checkbox' id='prefid_30' />
+            <label htmlFor='prefid_30'>和歌山県</label>
             <p className='region-label-6'>四国地方</p>
-            <label htmlFor='prefid_36'>
-              <input type='checkbox' id='prefid_36' />
-              <span>徳島県</span>
-            </label>
-            <label htmlFor='prefid_37'>
-              <input type='checkbox' id='prefid_37' />
-              <span>香川県</span>
-            </label>
-            <label htmlFor='prefid_38'>
-              <input type='checkbox' id='prefid_38' />
-              <span>愛媛県</span>
-            </label>
-            <label htmlFor='prefid_39'>
-              <input type='checkbox' id='prefid_39' />
-              <span>高知県</span>
-            </label>
+            <input type='checkbox' id='prefid_36' />
+            <label htmlFor='prefid_36'>徳島県</label>
+            <input type='checkbox' id='prefid_37' />
+            <label htmlFor='prefid_37'>香川県</label>
+            <input type='checkbox' id='prefid_38' />
+            <label htmlFor='prefid_38'>愛媛県</label>
+            <input type='checkbox' id='prefid_39' />
+            <label htmlFor='prefid_39'>高知県</label>
             <p className='region-label-7'>九州地方</p>
-            <label htmlFor='prefid_40'>
-              <input type='checkbox' id='prefid_40' />
-              <span>福岡県</span>
-            </label>
-            <label htmlFor='prefid_41'>
-              <input type='checkbox' id='prefid_41' />
-              <span>佐賀県</span>
-            </label>
-            <label htmlFor='prefid_42'>
-              <input type='checkbox' id='prefid_42' />
-              <span>長崎県</span>
-            </label>
-            <label htmlFor='prefid_43'>
-              <input type='checkbox' id='prefid_43' />
-              <span>熊本県</span>
-            </label>
-            <label htmlFor='prefid_44'>
-              <input type='checkbox' id='prefid_44' />
-              <span>大分県</span>
-            </label>
-            <label htmlFor='prefid_45'>
-              <input type='checkbox' id='prefid_45' />
-              <span>宮崎県</span>
-            </label>
-            <label htmlFor='prefid_46'>
-              <input type='checkbox' id='prefid_46' />
-              <span>鹿児島県</span>
-            </label>
-            <label htmlFor='prefid_47'>
-              <input type='checkbox' id='prefid_47' />
-              <span>沖縄県</span>
-            </label>
+            <input type='checkbox' id='prefid_40' />
+            <label htmlFor='prefid_40'>福岡県</label>
+            <input type='checkbox' id='prefid_41' />
+            <label htmlFor='prefid_41'>佐賀県</label>
+            <input type='checkbox' id='prefid_42' />
+            <label htmlFor='prefid_42'>長崎県</label>
+            <input type='checkbox' id='prefid_43' />
+            <label htmlFor='prefid_43'>熊本県</label>
+            <input type='checkbox' id='prefid_44' />
+            <label htmlFor='prefid_44'>大分県</label>
+            <input type='checkbox' id='prefid_45' />
+            <label htmlFor='prefid_45'>宮崎県</label>
+            <input type='checkbox' id='prefid_46' />
+            <label htmlFor='prefid_46'>鹿児島県</label>
+            <input type='checkbox' id='prefid_47' />
+            <label htmlFor='prefid_47'>沖縄県</label>
           </div>
         </div>
         <div className='Graph'></div>
