@@ -1,12 +1,8 @@
-const apiKey = 'zVDYtx8y918uT63zaya6tql1hIOyUBz4qZyWugOn'
+//const apiKey = 'zVDYtx8y918uT63zaya6tql1hIOyUBz4qZyWugOn'
+const apiKey = 'yp4PXt0ZUXFz4UTuQ3MRZI0GRQ0MZUpQQXgNPj6z'
 const cache: Record<number, [number[], number[]]> = {}
 
 async function getPopulationData(prefectureIds: number[]): Promise<[number[], number[]][] | []> {
-  if (prefectureIds.length > 10) {
-    console.error('都道府県IDの上限は10個です。10個以下の都道府県IDを指定してください。')
-    return []
-  }
-
   const requests = prefectureIds.map(async (id) => {
     if (cache[id]) {
       return cache[id]
