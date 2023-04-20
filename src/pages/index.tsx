@@ -2,8 +2,8 @@ import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
-import { getPlotlyData } from '@/functions/getPlotlyData'
 import { Data, Layout } from 'plotly.js'
+import { PopulationDataType, fetchPlotlyData } from '@/functions/fetchPlotData'
 
 const Plot = dynamic(() => import('react-plotly.js'), { ssr: false })
 
@@ -16,7 +16,9 @@ type MyLayout = Partial<Layout> & {
 }
 
 export default function Home() {
-  const [data, setData] = useState<Data[]>([])
+  let type: PopulationDataType = 'total'
+  const [dataselect, setDataselect] = useState<PopulationDataType>('total')
+  const [plotdata, setPlotdata] = useState<Data[]>([])
 
   const legend: MyLegend = {
     traceorder: 'normal',
@@ -62,7 +64,14 @@ export default function Home() {
     autosize: true,
   }
 
+  const radioChange = (data: any) => {
+    setDataselect(data.target.value)
+  }
+
   useEffect(() => {
+    let radiobuttons = document.querySelectorAll<HTMLInputElement>(
+      '#data-select > .multiradio > input[type="radio"]',
+    )
     let checkboxes = document.querySelectorAll<HTMLInputElement>(
       '#pref-select > input[type="checkbox"]',
     )
@@ -78,9 +87,16 @@ export default function Home() {
           checkedNames.push(String(labels[index].textContent))
         }
       })
-
-      setData(await getPlotlyData(checkedIds, checkedNames))
+      setPlotdata(await fetchPlotlyData(checkedIds, checkedNames, type))
     }
+
+    radiobuttons.forEach((radiobutton) => {
+      radiobutton.addEventListener('change', async (event) => {
+        type = radiobutton.value as PopulationDataType
+        console.log('change:radio')
+        plotGraph()
+      })
+    })
 
     checkboxes.forEach((checkbox) => {
       checkbox.addEventListener('change', async (event) => {
@@ -108,13 +124,41 @@ export default function Home() {
           </h1>
           <div className='data-select' id='data-select'>
             <div className='multiradio'>
-              <input type='radio' name='s3' id='select1' value='1' />
+              <input
+                type='radio'
+                name='s3'
+                id='select1'
+                value='total'
+                onClick={radioChange}
+                checked={dataselect === 'total'}
+              />
               <label htmlFor='select1'>総人口</label>
-              <input type='radio' name='s3' id='select2' value='2' />
+              <input
+                type='radio'
+                name='s3'
+                id='select2'
+                value='young'
+                onClick={radioChange}
+                checked={dataselect === 'young'}
+              />
               <label htmlFor='select2'>年少人口</label>
-              <input type='radio' name='s3' id='select3' value='3' />
+              <input
+                type='radio'
+                name='s3'
+                id='select3'
+                value='working'
+                onClick={radioChange}
+                checked={dataselect === 'working'}
+              />
               <label htmlFor='select3'>生産年齢人口</label>
-              <input type='radio' name='s3' id='select4' value='4' />
+              <input
+                type='radio'
+                name='s3'
+                id='select4'
+                value='elderly'
+                onClick={radioChange}
+                checked={dataselect === 'elderly'}
+              />
               <label htmlFor='select4'>老年人口</label>
             </div>
           </div>
@@ -214,7 +258,7 @@ export default function Home() {
         </div>
         <div className='graph card'>
           <Plot
-            data={data}
+            data={plotdata}
             layout={layout}
             config={{ responsive: true }}
             useResizeHandler
