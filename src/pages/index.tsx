@@ -93,7 +93,6 @@ export default function Home() {
     radiobuttons.forEach((radiobutton) => {
       radiobutton.addEventListener('change', async (event) => {
         type = radiobutton.value as PopulationDataType
-        console.log('change:radio')
         plotGraph()
       })
     })
