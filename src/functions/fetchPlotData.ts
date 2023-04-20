@@ -1,7 +1,7 @@
 import { fetchPrefectureData, PrefectureData } from './fetchPrefectureData'
 import { Data, ScatterData } from 'plotly.js'
 
-type PopulationDataType = 'total' | 'young' | 'working' | 'elderly'
+export type PopulationDataType = 'total' | 'young' | 'working' | 'elderly'
 
 async function fetchPlotlyData(
   prefectureIds: number[],
