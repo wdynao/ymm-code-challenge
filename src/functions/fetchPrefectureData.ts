@@ -12,7 +12,9 @@ export type PrefectureData = {
 const cache: Record<number, PrefectureData> = {}
 
 async function fetchPrefectureData(prefectureIds: number[]): Promise<PrefectureData[] | []> {
-  const requests = prefectureIds.map(async (id) => {
+  const validIds = prefectureIds.filter((id) => Number.isInteger(id) && id >= 1 && id <= 47)
+
+  const requests = validIds.map(async (id) => {
     if (cache[id]) {
       return cache[id]
     }
