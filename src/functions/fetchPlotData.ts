@@ -8,6 +8,10 @@ async function fetchPlotlyData(
   prefectureNames: string[],
   dataType: PopulationDataType,
 ): Promise<Data[]> {
+  if (!['total', 'young', 'working', 'elderly'].includes(dataType)) {
+    return []
+  }
+
   try {
     const populationData = await fetchPrefectureData(prefectureIds)
 
@@ -75,10 +79,13 @@ async function testFetchPlotlyData(): Promise<void> {
     // @ts-expect-error
     const dataType3: PopulationDataType = 'invalid'
     try {
-      await fetchPlotlyData(prefectureIds3, prefectureNames3, dataType3)
-      console.error(
-        'テスト失敗: 無効なデータタイプを渡す場合、例外が発生することを確認できませんでした。',
-      )
+      const results3 = await fetchPlotlyData(prefectureIds3, prefectureNames3, dataType3)
+      if (results3.length !== 0) {
+        console.log(results3)
+        console.error(
+          'テスト失敗: 無効なデータタイプを渡す場合、例外が発生することを確認できませんでした。',
+        )
+      }
     } catch (error) {
       console.log('テスト成功: 無効なデータタイプを渡す')
     }
