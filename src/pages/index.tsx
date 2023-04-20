@@ -129,7 +129,7 @@ export default function Home() {
                 name='s3'
                 id='select1'
                 value='total'
-                onClick={radioChange}
+                onChange={radioChange}
                 checked={dataselect === 'total'}
               />
               <label htmlFor='select1'>総人口</label>
@@ -138,7 +138,7 @@ export default function Home() {
                 name='s3'
                 id='select2'
                 value='young'
-                onClick={radioChange}
+                onChange={radioChange}
                 checked={dataselect === 'young'}
               />
               <label htmlFor='select2'>年少人口</label>
@@ -147,7 +147,7 @@ export default function Home() {
                 name='s3'
                 id='select3'
                 value='working'
-                onClick={radioChange}
+                onChange={radioChange}
                 checked={dataselect === 'working'}
               />
               <label htmlFor='select3'>生産年齢人口</label>
@@ -156,7 +156,7 @@ export default function Home() {
                 name='s3'
                 id='select4'
                 value='elderly'
-                onClick={radioChange}
+                onChange={radioChange}
                 checked={dataselect === 'elderly'}
               />
               <label htmlFor='select4'>老年人口</label>
