@@ -106,6 +106,18 @@ export default function Home() {
             <Image src='/icon.png' alt='Logo' className='Logo' width={60} height={60} priority />
             都道府県比較<span>.NEXT</span>
           </h1>
+          <div className='data-select' id='data-select'>
+            <div className='multiradio'>
+              <input type='radio' name='s3' id='select1' value='1' />
+              <label htmlFor='select1'>総人口</label>
+              <input type='radio' name='s3' id='select2' value='2' />
+              <label htmlFor='select2'>年少人口</label>
+              <input type='radio' name='s3' id='select3' value='3' />
+              <label htmlFor='select3'>生産年齢人口</label>
+              <input type='radio' name='s3' id='select4' value='4' />
+              <label htmlFor='select4'>老年人口</label>
+            </div>
+          </div>
           <div className='pref-select' id='pref-select'>
             <p className='region-label-1'>北海道</p>
             <input type='checkbox' id='prefid_1' />
