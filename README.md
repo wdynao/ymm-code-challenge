@@ -36,7 +36,15 @@ React は使っているが、Vue や next はあまり使ったことがなか�
 function/getPopulationData.ts に API から人口推移データを取得する関数を実装
 
 ```typescript:getPopulationData.ts
-[年データ:number[], 総人口データ:number[]] = getPopulationData(都道府県ID配列:number[]);
+type PrefectureData = {
+  years: number[]
+  totalPopulation: number[]
+  youngPopulation: number[]
+  workingPopulation: number[]
+  elderlyPopulation: number[]
+}
+
+PrefectureData = fetchPrefectureData(都道府県ID配列:number[]): Promise<PrefectureData[] | []>
 ```
 
 ~~API の仕様から一度に取得するデータ数上限を 10 に設定。10 個以上の場合は console.error 及び null として結果を出力~~
